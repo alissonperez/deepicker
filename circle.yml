@@ -10,4 +10,5 @@ dependencies:
 
 test:
  override:
-   - npm test
+   - make lint
+   - make test

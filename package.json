@@ -1,17 +1,22 @@
 {
- "name": "dpick",
- "version": "0.0.1",
- "description": "",
- "main": "index.js",
- "scripts": {
-  "test": "jest"
- },
- "author": "",
- "license": "MIT",
- "devDependencies": {
-  "jest": "^22.1.4"
- },
- "dependencies": {
-  "deepmerge": "^2.0.1"
- }
+  "name": "dpick",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "config": {
+    "src_path": "src"
+  },
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint $npm_package_config_src_path"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "jest": "^22.1.4"
+  },
+  "dependencies": {
+    "deepmerge": "^2.0.1"
+  }
 }
