@@ -2,7 +2,7 @@
   "name": "dpick",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "config": {
     "src_path": "src"
   },
