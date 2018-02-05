@@ -253,6 +253,78 @@ describe('#pick', () => {
 
     expect(picker(incTree, excTree).pick(val)).toEqual(expected)
   })
+
+  test('picker with * field in include fields', () => {
+    const val = {
+      foo: {
+        test1: {
+          val: 'test',
+          val2: 'test2'
+        },
+        test2: {
+          val: 'test',
+          val2: 'test2'
+        }
+      }
+    }
+
+    const expected = {
+      foo: {
+        test1: {
+          val2: 'test2'
+        },
+        test2: {
+          val2: 'test2'
+        }
+      }
+    }
+
+    const incTree = {
+      foo: {
+        '*': {
+          'val2': {}
+        }
+      }
+    }
+
+    expect(picker(incTree).pick(val)).toEqual(expected)
+  })
+
+  test.only('picker with * field in exclude fields', () => {
+    const val = {
+      foo: {
+        test1: {
+          val: 'test',
+          val2: 'test2'
+        },
+        test2: {
+          val: 'test',
+          val2: 'test2'
+        }
+      }
+    }
+
+    const expected = {
+      foo: {
+        test1: {
+          val2: 'test2'
+        },
+        test2: {
+          val2: 'test2'
+        }
+      }
+    }
+
+    const excTree = {
+      foo: {
+        '*': {
+          'val': {}
+        }
+      }
+    }
+
+    expect(picker({}, excTree).pick(val)).toEqual(expected)
+  })
 })
 
 describe('#pickPromise', () => {

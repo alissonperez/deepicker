@@ -77,7 +77,7 @@ const picker = {
     const promises = []
 
     let keys = Object.keys(incTree)
-    if (keys.length === 0) {
+    if (keys.length === 0 || keys.indexOf('*') > -1) {
       keys = Object.keys(val)
     }
 
@@ -89,8 +89,14 @@ const picker = {
       // Exclude
       if (excTree[key] && Object.keys(excTree[key]).length === 0) continue
 
+      // Exclude with *
+      if (excTree['*'] && Object.keys(excTree['*']).length === 0) continue
+
       // Solve key
-      result[key] = this._pick(val[key], incTree[key], excTree[key], promise)
+      result[key] = this._pick(val[key],
+                               incTree[key] || incTree['*'],
+                               excTree[key] || excTree['*'],
+                               promise)
 
       if (promise && result[key] && typeof result[key].then === 'function') {
         promises.push(key, result[key])
