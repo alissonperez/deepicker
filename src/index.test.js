@@ -1,4 +1,4 @@
-const dpick = require('./index')
+const deepicker = require('./index')
 
 const testVal = {
   foo: 'bar',
@@ -29,7 +29,7 @@ describe('#picker', () => {
       }
     }
 
-    expect(dpick.picker(incTree, excTree).pick(testVal)).toEqual(expected)
+    expect(deepicker.picker(incTree, excTree).pick(testVal)).toEqual(expected)
   })
 })
 
@@ -45,7 +45,7 @@ describe('#xpathPicker', () => {
       }
     }
 
-    expect(dpick.xpathPicker(include, exclude).pick(testVal)).toEqual(expected)
+    expect(deepicker.xpathPicker(include, exclude).pick(testVal)).toEqual(expected)
   })
 })
 
@@ -61,6 +61,6 @@ describe('#simplePicker', () => {
       }
     }
 
-    expect(dpick.simplePicker(include, exclude).pick(testVal)).toEqual(expected)
+    expect(deepicker.simplePicker(include, exclude).pick(testVal)).toEqual(expected)
   })
 })

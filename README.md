@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/alissonperez/dpick.svg?style=svg)](https://circleci.com/gh/alissonperez/dpick)
+[![CircleCI](https://circleci.com/gh/alissonperez/deepicker.svg?style=svg)](https://circleci.com/gh/alissonperez/deepicker)
 
-DPICK
-==========
+Deepicker
+=============
