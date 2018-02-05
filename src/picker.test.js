@@ -64,6 +64,38 @@ describe('#pick', () => {
     expect(picker(defaultIncTree).pick(val)).toEqual(expected)
   })
 
+  test('should filter arrays with exclude', () => {
+    const val = {
+      foo: {
+        myArray: [
+          {bar: 1, baz: 2},
+          {bar: 3, baz: 4},
+          {bar: 5, baz: 6},
+        ]
+      }
+    }
+
+    const excTree = {
+      foo: {
+        myArray: {
+          baz: {}
+        }
+      }
+    }
+
+    const expected = {
+      foo: {
+        myArray: [
+          {bar: 1},
+          {bar: 3},
+          {bar: 5},
+        ]
+      }
+    }
+
+    expect(picker({}, excTree).pick(val)).toEqual(expected)
+  })
+
   test('should call functions with expected context', () => {
     const val = {
       foo: function (picker) {
