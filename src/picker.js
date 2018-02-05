@@ -58,13 +58,17 @@ const picker = {
       })
     }
 
-    // Is a function
+    // A function
     if (isFunction(val)) {
       return val(newPicker(incTree, excTree))
     }
 
     // An array TODO Check how handle promises here
     if (val instanceof Array) {
+      if (promise) {
+        return Promise.all(val.map(item => this._pick(item, incTree, excTree, promise)))
+      }
+
       return val.map(item => this._pick(item, incTree, excTree, promise))
     }
 

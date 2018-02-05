@@ -291,6 +291,65 @@ describe('#pickPromise', () => {
       return expect(result).toEqual(expected)
     })
   })
+
+  test('should resolve a function pick method', () => {
+    const val = {
+      foo: function (picker) {
+        return picker.pick({
+          bar: 'baz',
+          other: 'value'
+        })
+      }
+    }
+
+    const incTree = {
+      foo: {
+        bar: {}
+      }
+    }
+
+    const expected = {
+      foo: {
+        bar: 'baz'
+      }
+    }
+
+    return picker(incTree).pickPromise(val).then(result => {
+      return expect(result).toEqual(expected)
+    })
+  })
+
+  test('should resolve an array of promises', () => {
+    const val = {
+      foo: [
+        Promise.resolve({
+          bar: 'baz',
+          other: 'value'
+        }),
+        Promise.resolve({
+          bar: 'other baz',
+          other: 'value'
+        })
+      ]
+    }
+
+    const incTree = {
+      foo: {
+        bar: {}
+      }
+    }
+
+    const expected = {
+      foo: [
+        {bar: 'baz'},
+        {bar: 'other baz'},
+      ]
+    }
+
+    return picker(incTree).pickPromise(val).then(result => {
+      return expect(result).toEqual(expected)
+    })
+  })
 })
 
 describe('#include', () => {
