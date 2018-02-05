@@ -67,7 +67,7 @@ describe('#pick', () => {
   test('should call functions with expected context', () => {
     const val = {
       foo: function (picker) {
-        return picker({
+        return picker.pick({
           bar: 1,
           baz: 2
         })
@@ -166,9 +166,9 @@ describe('#pick', () => {
         foo: 'baz'
       },
       other: function (picker) {
-        return picker({
+        return picker.pick({
           foo: function (picker) {
-            return picker({
+            return picker.pick({
               test: 'foo',
               toExclude: 'bar'
             })

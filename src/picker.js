@@ -5,6 +5,15 @@ function isFunction(functionToCheck) {
   return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]'
 }
 
+function newPicker (incTree, excTree) {
+  const localPicker = Object.create(picker)
+
+  localPicker.incTree = incTree || {}
+  localPicker.excTree = excTree || {}
+
+  return localPicker
+}
+
 const picker = {
   // Include and exclude trees
   incTree: {},
@@ -51,7 +60,7 @@ const picker = {
 
     // Is a function
     if (isFunction(val)) {
-      return val(subVal => this._pick(subVal, incTree, excTree, promise))
+      return val(newPicker(incTree, excTree))
     }
 
     // An array TODO Check how handle promises here
@@ -100,9 +109,4 @@ const picker = {
   }
 }
 
-module.exports = (incTree, excTree) => {
-  const localPicker = Object.create(picker)
-  localPicker.incTree = incTree
-  localPicker.excTree = excTree
-  return localPicker
-}
+module.exports = newPicker
