@@ -10,6 +10,18 @@ const picker = {
   incTree: {},
   excTree: {},
 
+  include: function (key) {
+    if (this.excTree && this.excTree.hasOwnProperty(key)) {
+      return false
+    }
+
+    if (!this.incTree || Object.keys(this.incTree).length === 0) {
+      return true
+    }
+
+    return this.incTree && this.incTree.hasOwnProperty(key)
+  },
+
   pickPromise: function (val) {
     return this._pick(val, this.incTree, this.excTree, true)
   },

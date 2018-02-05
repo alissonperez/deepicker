@@ -292,3 +292,35 @@ describe('#pickPromise', () => {
     })
   })
 })
+
+describe('#include', () => {
+  test('should return true if key is included', () => {
+    const incTree = {
+      foo: {},
+      myPromise: {}
+    }
+
+    expect(picker(incTree).include('foo')).toBe(true)
+  })
+
+  test('should return false if key is in exclude', () => {
+    const incTree = {
+      foo: {},
+      myPromise: {}
+    }
+
+    const excTree = {
+      foo: {}
+    }
+
+    expect(picker(incTree, excTree).include('foo')).toBe(false)
+  })
+
+  test('should return true if both inc and exc tree is undefined', () => {
+    expect(picker().include('foo')).toBe(true)
+  })
+
+  test('should return true if both inc and exc is empty', () => {
+    expect(picker({}, {}).include('foo')).toBe(true)
+  })
+})
