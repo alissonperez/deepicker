@@ -50,6 +50,11 @@ const picker = {
       return val
     }
 
+    // Handle arrays
+    if (val instanceof Array) {
+      return val.map(item => this._pickStatic(item, incTree, excTree))
+    }
+
     if (keys.length === 0 || keys.indexOf('*') > -1) {
       keys = Object.keys(val)
     }

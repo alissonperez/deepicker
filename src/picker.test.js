@@ -525,6 +525,35 @@ describe('#pickStatic', () => {
     expect(picker(incTree).pickStatic(val)).toEqual(expected)
   })
 
+  test('should handle arrays', () => {
+    const val = {
+      foo: [
+        {bar: 'baz', other: 'value'},
+        {bar: 'baz', other: 'value'},
+        {bar: 'baz', other: 'value'}
+      ],
+      other: {
+        foo: 'bar'
+      }
+    }
+
+    const incTree = {
+      foo: {
+        bar: {}
+      }
+    }
+
+    const expected = {
+      foo: [
+        {bar: 'baz'},
+        {bar: 'baz'},
+        {bar: 'baz'}
+      ]
+    }
+
+    expect(picker(incTree).pickStatic(val)).toEqual(expected)
+  })
+
   test('should exclude some fields', () => {
     const val = {
       foo: {
