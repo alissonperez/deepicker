@@ -1,4 +1,4 @@
-const deepMerge = require('deepmerge')
+const util = require('./util')
 
 const tokens = {
   ',': 'COMMA',
@@ -95,7 +95,7 @@ const parser = {
     if (this.current().k === 'COMMA') {
       this.next()
       const filtersResult = this.parseFilters()
-      performMerge(result, filtersResult || {})
+      util.performMerge(result, filtersResult || {})
     }
 
     return result
