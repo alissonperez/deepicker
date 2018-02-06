@@ -6,7 +6,7 @@ dependencies:
  pre:
    - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
  override:
-   - npm install --dev
+   - npm install --only=dev
  cache_directories:
    - "./node_modules"
 
