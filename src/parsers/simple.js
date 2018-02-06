@@ -1,22 +1,38 @@
-function parseFields(fields) {
+const util = require('./util')
+
+function handleWildcard (object) {
+  if (object['*']) {
+    Object.keys(object).filter(i => i !== '*').forEach(key => {
+      util.performMerge(object[key], object['*'])
+    })
+  }
+
+  Object.keys(object).forEach(key => {
+    handleWildcard(object[key])
+  })
+}
+
+function parseFields (fields) {
   let result = {}
 
-  function fill(items, object) {
-    let first = items.shift()
-    if (!(first in object)) {
-      object[first] = {}
+  function fill(items, object, pos) {
+    let item = items[pos]
+    if (!item) {
+      return
     }
 
-    if (items.length > 0) {
-      fill(items, object[first])
+    if (!object.hasOwnProperty(item)) {
+      object[item] = {}
     }
+
+    fill(items, object[item], ++pos) // Go to next
   }
 
-  let splited
   for (let option of fields) {
-    splited = option.trim().split('.')
-    fill(splited, result)
+    fill(option.trim().split('.'), result, 0)
   }
+
+  handleWildcard(result)
 
   return result
 }
