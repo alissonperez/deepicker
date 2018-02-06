@@ -31,6 +31,57 @@ const picker = {
     return this.incTree && this.incTree.hasOwnProperty(key)
   },
 
+  pickStatic: function (val) {
+    return this._pickStatic(val, this.incTree, this.excTree)
+  },
+
+  _pickStatic: function (val, incTree, excTree) {
+    // Leafs (if we reach there)
+    if (typeof val !== 'object') {
+      return val
+    }
+
+    incTree = incTree || {}
+    excTree = excTree || {}
+
+    let keys = Object.keys(incTree)
+    if (keys.length === 0 && Object.keys(excTree).length === 0) {
+      // Nothing to do, a fast return with all value left
+      return val
+    }
+
+    if (keys.length === 0 || keys.indexOf('*') > -1) {
+      keys = Object.keys(val)
+    }
+
+    // Result object
+    const result = {}
+
+    keys.forEach(key => {
+      if (!val.hasOwnProperty(key)) {
+        return
+      }
+
+      // Exclude
+      if (excTree[key] && Object.keys(excTree[key]).length === 0) {
+        return
+      }
+
+      // Exclude with *
+      if (excTree['*'] && Object.keys(excTree['*']).length === 0) {
+        return
+      }
+
+      result[key] = this._pickStatic(
+        val[key],
+        incTree[key] || incTree['*'],
+        excTree[key] || excTree['*']
+      )
+    })
+
+    return result
+  },
+
   pickPromise: function (val) {
     return this._pick(val, this.incTree, this.excTree, true)
   },

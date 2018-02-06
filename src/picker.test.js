@@ -487,3 +487,156 @@ describe('#include', () => {
     expect(picker({}, {}).include('foo')).toBe(true)
   })
 })
+
+describe('#pickStatic', () => {
+  test('should return same json', () => {
+    const val = {
+      foo: {
+        bar: 3
+      },
+      other: {
+        foo: 'bar'
+      }
+    }
+
+    expect(picker().pickStatic(val)).toEqual(val)
+  })
+
+  test('should return json filtered', () => {
+    const val = {
+      foo: {
+        bar: 3
+      },
+      other: {
+        foo: 'bar'
+      }
+    }
+
+    const incTree = {
+      foo: {},
+    }
+
+    const expected = {
+      foo: {
+        bar: 3
+      }
+    }
+
+    expect(picker(incTree).pickStatic(val)).toEqual(expected)
+  })
+
+  test('should exclude some fields', () => {
+    const val = {
+      foo: {
+        bar: 3,
+        other: 'value'
+      },
+      other: {
+        foo: 'bar'
+      }
+    }
+
+    const incTree = {
+      foo: {},
+      other: {}
+    }
+
+    const excTree = {
+      foo: {
+        other: {}
+      }
+    }
+
+    const expected = {
+      foo: {
+        bar: 3,
+      },
+      other: {
+        foo: 'bar'
+      }
+    }
+
+    expect(picker(incTree, excTree).pickStatic(val)).toEqual(expected)
+  })
+
+  test('should handle "*" wild card in include tree', () => {
+    const val = {
+      foo: {
+        bar: {
+          baz: 'foo 1',
+          toBeRemoved: 'a value'
+        },
+        other: {
+          baz: 'foo 2',
+          otherKey: 'with value'
+        }
+      },
+      other: {
+        myKey: 'foo'
+      }
+    }
+
+    const incTree = {
+      foo: {
+        '*': {
+          baz: {}
+        }
+      }
+    }
+
+    const expected = {
+      foo: {
+        bar: {
+          baz: 'foo 1'
+        },
+        other: {
+          baz: 'foo 2'
+        }
+      }
+    }
+
+    expect(picker(incTree).pickStatic(val)).toEqual(expected)
+  })
+
+  test('should handle "*" wild card in exclude tree', () => {
+    const val = {
+      foo: {
+        bar: {
+          baz: 'foo 1',
+          toBeRemoved: 'a value'
+        },
+        other: {
+          baz: 'foo 2',
+          otherKey: 'with value'
+        }
+      },
+      other: {
+        myKey: 'foo'
+      }
+    }
+
+    const excTree = {
+      foo: {
+        '*': {
+          baz: {}
+        }
+      }
+    }
+
+    const expected = {
+      foo: {
+        bar: {
+          toBeRemoved: 'a value'
+        },
+        other: {
+          otherKey: 'with value'
+        }
+      },
+      other: {
+        myKey: 'foo'
+      }
+    }
+
+    expect(picker({}, excTree).pickStatic(val)).toEqual(expected)
+  })
+})
