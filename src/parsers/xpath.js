@@ -43,6 +43,25 @@ function tokenizer(text) {
   return result
 }
 
+// Performs a merge from source into destination
+// It's simillar to Object.assign, but merge deeply
+// between objects
+function performMerge (destination, source) {
+  Object.keys(source).forEach(key_source => {
+    if (!(destination[key_source])) {
+      destination[key_source] = source[key_source]
+    }
+
+    // Adding all * content already set in destination
+    // At our source before adding it into destination
+    if (key_source !== '*' && destination.hasOwnProperty('*')) {
+      performMerge(source[key_source], destination['*'])
+    }
+
+    performMerge(destination[key_source], source[key_source])
+  })
+}
+
 // GRAMMAR:
 
 // FILTERS := FILTER "," FILTERS | FILTER
@@ -95,7 +114,7 @@ const parser = {
     if (this.current().k === 'COMMA') {
       this.next()
       const filtersResult = this.parseFilters()
-      return deepMerge(result, filtersResult)
+      performMerge(result, filtersResult || {})
     }
 
     return result

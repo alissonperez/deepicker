@@ -290,7 +290,7 @@ describe('#pick', () => {
     expect(picker(incTree).pick(val)).toEqual(expected)
   })
 
-  test.only('picker with * field in exclude fields', () => {
+  test('picker with * field in exclude fields', () => {
     const val = {
       foo: {
         test1: {

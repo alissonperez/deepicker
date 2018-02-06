@@ -43,3 +43,30 @@ test('parsing val that needs a deep merge', () => {
   const val = 'a(b,c),a(d,f)'
   expect(xPathParser(val)).toEqual(expected)
 })
+
+test('parsing val with * must merge its subtree in other trees', () => {
+  // This is an optimization one of keys in the same level is * we can merge it all
+  // in the sub tree of *
+
+  const expected = {
+    a: {
+      '*': {
+        x: {},
+      },
+      b: {
+        x: {},  // this must come from '*' neighbor
+        c: {}
+      },
+      d: {
+        x: {},  // this must come from '*' neighbor
+        f: {
+          g: {}
+        }
+      },
+    }
+  }
+
+  const val = 'a/*/x,a/b/c,a/d/f/g'
+
+  expect(xPathParser(val)).toEqual(expected)
+})
