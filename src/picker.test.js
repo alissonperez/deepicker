@@ -488,6 +488,16 @@ describe('#include', () => {
     expect(picker(incTree, excTree).include('foo')).toBe(false)
   })
 
+  test('should return true if key is in exclude but has sub keys to exclude', () => {
+    const excTree = {
+      foo: {
+        bar: {}
+      }
+    }
+
+    expect(picker({}, excTree).include('foo')).toBe(true)
+  })
+
   test('should return false if exclude has "*" wildcard', () => {
     const incTree = {
       foo: {}

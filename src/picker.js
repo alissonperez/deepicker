@@ -32,7 +32,9 @@ const picker = {
   },
 
   include: function (key) {
-    if (this.excTree && this.excTree.hasOwnProperty(key)) {
+    if (this.excTree
+        && this.excTree.hasOwnProperty(key)
+        && Object.keys(this.excTree[key]).length === 0) {
       return false
     }
 
