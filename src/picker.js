@@ -24,11 +24,18 @@ const picker = {
       return false
     }
 
-    if (!this.incTree || Object.keys(this.incTree).length === 0) {
+    if (!this.incTree ||
+        Object.keys(this.incTree).length === 0 ||
+        this.incTree.hasOwnProperty(key) ||
+        this.incTree.hasOwnProperty('*')) { // Handles * wildcard
       return true
     }
 
-    return this.incTree && this.incTree.hasOwnProperty(key)
+    if (this.excTree && this.excTree.hasOwnProperty('*')) {
+      return false
+    }
+
+    return true
   },
 
   pickStatic: function (val) {

@@ -466,6 +466,15 @@ describe('#include', () => {
     expect(picker(incTree).include('foo')).toBe(true)
   })
 
+  test('should return true if include has "*" wildcard', () => {
+    const incTree = {
+      foo: {},
+      '*': {}
+    }
+
+    expect(picker(incTree).include('other')).toBe(true)
+  })
+
   test('should return false if key is in exclude', () => {
     const incTree = {
       foo: {},
@@ -477,6 +486,30 @@ describe('#include', () => {
     }
 
     expect(picker(incTree, excTree).include('foo')).toBe(false)
+  })
+
+  test('should return false if exclude has "*" wildcard', () => {
+    const incTree = {
+      foo: {}
+    }
+
+    const excTree = {
+      '*': {}
+    }
+
+    expect(picker(incTree, excTree).include('other')).toBe(false)
+  })
+
+  test('should return true if include has exact key and exclude has "*" wildcard', () => {
+    const incTree = {
+      foo: {}
+    }
+
+    const excTree = {
+      '*': {}
+    }
+
+    expect(picker(incTree, excTree).include('foo')).toBe(true)
   })
 
   test('should return true if both inc and exc tree is undefined', () => {
