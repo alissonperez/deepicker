@@ -457,6 +457,14 @@ describe('#pickPromise', () => {
 })
 
 describe('#include', () => {
+  test('should return true if both inc and exc tree is undefined', () => {
+    expect(picker().include('foo')).toBe(true)
+  })
+
+  test('should return true if both inc and exc is empty', () => {
+    expect(picker({}, {}).include('foo')).toBe(true)
+  })
+
   test('should return true if key is included', () => {
     const incTree = {
       foo: {},
@@ -475,7 +483,27 @@ describe('#include', () => {
     expect(picker(incTree).include('other')).toBe(true)
   })
 
+  test('should return false if key is not in include', () => {
+    const incTree = {
+      foo: {},
+      myPromise: {}
+    }
+
+    expect(picker(incTree).include('bar')).toBe(false)
+  })
+
   test('should return false if key is in exclude', () => {
+    const incTree = {}
+
+    const excTree = {
+      foo: {},
+      myPromise: {}
+    }
+
+    expect(picker(incTree, excTree).include('myPromise')).toBe(false)
+  })
+
+  test('should return true if key is in exclude and include', () => {
     const incTree = {
       foo: {},
       myPromise: {}
@@ -485,7 +513,7 @@ describe('#include', () => {
       foo: {}
     }
 
-    expect(picker(incTree, excTree).include('foo')).toBe(false)
+    expect(picker(incTree, excTree).include('foo')).toBe(true)
   })
 
   test('should return true if key is in exclude but has sub keys to exclude', () => {
@@ -499,9 +527,7 @@ describe('#include', () => {
   })
 
   test('should return false if exclude has "*" wildcard', () => {
-    const incTree = {
-      foo: {}
-    }
+    const incTree = {}
 
     const excTree = {
       '*': {}
@@ -520,14 +546,6 @@ describe('#include', () => {
     }
 
     expect(picker(incTree, excTree).include('foo')).toBe(true)
-  })
-
-  test('should return true if both inc and exc tree is undefined', () => {
-    expect(picker().include('foo')).toBe(true)
-  })
-
-  test('should return true if both inc and exc is empty', () => {
-    expect(picker({}, {}).include('foo')).toBe(true)
   })
 })
 

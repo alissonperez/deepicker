@@ -32,20 +32,35 @@ const picker = {
   },
 
   include: function (key) {
-    if (this.excTree
-        && this.excTree.hasOwnProperty(key)
-        && Object.keys(this.excTree[key]).length === 0) {
-      return false
-    }
+    const incTree = this.incTree || {}
+    const excTree = this.excTree || {}
 
-    if (!this.incTree ||
-        Object.keys(this.incTree).length === 0 ||
-        this.incTree.hasOwnProperty(key) ||
-        this.incTree.hasOwnProperty('*')) { // Handles * wildcard
+    // It is in include keys, must be included
+    if (incTree.hasOwnProperty(key)) {
       return true
     }
 
-    if (this.excTree && this.excTree.hasOwnProperty('*')) {
+    // Key isn't in include keys but its filled,
+    // it can't be included
+    if (Object.keys(incTree).length > 0
+        && !incTree.hasOwnProperty('*')) {
+      return false
+    }
+
+    // It is explicity in exclude keys and exclude keys is empty (is a leaf),
+    // must not be included
+    if (excTree.hasOwnProperty(key)
+        && Object.keys(excTree[key]).length === 0) {
+      return false
+    }
+
+    // Handle "*" wildcard in include
+    if (incTree.hasOwnProperty('*')) {
+      return true
+    }
+
+    // Handle "*" wildcard in exclude
+    if (excTree.hasOwnProperty('*')) {
       return false
     }
 
