@@ -726,14 +726,14 @@ describe('#toContext', () => {
       }
     }
 
-    localPicker = picker(incTree, excTree).toContext('foo', 'bar')
+    const localPicker = picker(incTree, excTree).toContext('foo', 'bar')
 
     expect(localPicker.incTree).toEqual(incTree.foo.bar)
     expect(localPicker.excTree).toEqual(excTree.foo.bar)
   })
 
   test('move to context should handle empty trees', () => {
-    localPicker = picker().toContext('foo', 'bar')
+    const localPicker = picker().toContext('foo', 'bar')
 
     expect(localPicker.incTree).toEqual({})
     expect(localPicker.excTree).toEqual({})
