@@ -24,8 +24,8 @@ const picker = {
     let excTree = this.excTree || {}
 
     Array.from(arguments).forEach(item => {
-      incTree = incTree[item] || {}
-      excTree = excTree[item] || {}
+      incTree = incTree[item] || incTree['*'] || {}
+      excTree = excTree[item] || excTree['*'] || {}
     })
 
     return newPicker(incTree, excTree)

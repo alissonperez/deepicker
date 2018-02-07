@@ -738,4 +738,35 @@ describe('#toContext', () => {
     expect(localPicker.incTree).toEqual({})
     expect(localPicker.excTree).toEqual({})
   })
+
+  test('move context should move through "*" wildcard', () => {
+    const incTree = {
+      foo: {
+        '*': {
+          baz: {},
+          other: {
+            key: {}
+          }
+        },
+        other: {
+          foo: {}
+        }
+      }
+    }
+
+    const excTree = {
+      foo: {
+        '*': {
+          other: {
+            key: {}
+          }
+        }
+      }
+    }
+
+    const localPicker = picker(incTree, excTree).toContext('foo', 'bar')
+
+    expect(localPicker.incTree).toEqual(incTree.foo['*'])
+    expect(localPicker.excTree).toEqual(excTree.foo['*'])
+  })
 })
