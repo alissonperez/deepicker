@@ -31,9 +31,9 @@ const picker = {
     return newPicker(incTree, excTree)
   },
 
-  include: function (key) {
-    const incTree = this.incTree || {}
-    const excTree = this.excTree || {}
+  include: function (key, incTree, excTree) {
+    incTree = incTree || this.incTree || {}
+    excTree = excTree || this.excTree || {}
 
     // It is in include keys, must be included
     if (incTree.hasOwnProperty(key)) {
