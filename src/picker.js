@@ -19,6 +19,18 @@ const picker = {
   incTree: {},
   excTree: {},
 
+  toContext: function() {
+    let incTree = this.incTree || {}
+    let excTree = this.excTree || {}
+
+    Array.from(arguments).forEach(item => {
+      incTree = incTree[item] || {}
+      excTree = excTree[item] || {}
+    })
+
+    return newPicker(incTree, excTree)
+  },
+
   include: function (key) {
     if (this.excTree && this.excTree.hasOwnProperty(key)) {
       return false

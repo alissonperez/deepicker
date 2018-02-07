@@ -702,3 +702,40 @@ describe('#pickStatic', () => {
     expect(picker({}, excTree).pickStatic(val)).toEqual(expected)
   })
 })
+
+describe('#toContext', () => {
+  test('move to context tree', () => {
+    const incTree = {
+      foo: {
+        bar: {
+          baz: {},
+          other: {
+            key: {}
+          }
+        }
+      }
+    }
+
+    const excTree = {
+      foo: {
+        bar: {
+          other: {
+            key: {}
+          }
+        }
+      }
+    }
+
+    localPicker = picker(incTree, excTree).toContext('foo', 'bar')
+
+    expect(localPicker.incTree).toEqual(incTree.foo.bar)
+    expect(localPicker.excTree).toEqual(excTree.foo.bar)
+  })
+
+  test('move to context should handle empty trees', () => {
+    localPicker = picker().toContext('foo', 'bar')
+
+    expect(localPicker.incTree).toEqual({})
+    expect(localPicker.excTree).toEqual({})
+  })
+})
