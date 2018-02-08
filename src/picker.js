@@ -60,7 +60,8 @@ const picker = {
     }
 
     // Handle "*" wildcard in exclude
-    if (excTree.hasOwnProperty('*')) {
+    if (excTree.hasOwnProperty('*')
+        && Object.keys(excTree['*']).length === 0) {
       return false
     }
 
