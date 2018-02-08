@@ -661,6 +661,34 @@ describe('#pickStatic', () => {
     expect(picker(incTree, excTree).pickStatic(val)).toEqual(expected)
   })
 
+  test('include should have priority over exclude if same key is in both', () => {
+    const val = {
+      foo: {
+        bar: 3,
+        other: 'value'
+      },
+      other: {
+        foo: 'bar'
+      }
+    }
+
+    const incTree = {
+      foo: {
+        bar: {}
+      }
+    }
+
+    const excTree = incTree
+
+    const expected = {
+      foo: {
+        bar: 3
+      }
+    }
+
+    expect(picker(incTree, excTree).pickStatic(val)).toEqual(expected)
+  })
+
   test('should handle "*" wild card in include tree', () => {
     const val = {
       foo: {

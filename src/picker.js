@@ -31,9 +31,13 @@ const picker = {
     return newPicker(incTree, excTree)
   },
 
-  include: function (key, incTree, excTree) {
-    incTree = incTree || this.incTree || {}
-    excTree = excTree || this.excTree || {}
+  include: function (key) {
+    return this._include(key, this.incTree, this.excTree)
+  },
+
+  _include: function (key, incTree, excTree) {
+    incTree = incTree || {}
+    excTree = excTree || {}
 
     // It is in include keys, must be included
     if (incTree.hasOwnProperty(key)) {
@@ -104,13 +108,7 @@ const picker = {
         return
       }
 
-      // Exclude
-      if (excTree[key] && Object.keys(excTree[key]).length === 0) {
-        return
-      }
-
-      // Exclude with *
-      if (excTree['*'] && Object.keys(excTree['*']).length === 0) {
+      if (!(this._include(key, incTree, excTree))) {
         return
       }
 
@@ -179,11 +177,9 @@ const picker = {
       key = keys[i]
       if (!val.hasOwnProperty(key)) continue
 
-      // Exclude
-      if (excTree[key] && Object.keys(excTree[key]).length === 0) continue
-
-      // Exclude with *
-      if (excTree['*'] && Object.keys(excTree['*']).length === 0) continue
+      if (!(this._include(key, incTree, excTree))) {
+        continue
+      }
 
       // Solve key
       result[key] = this._pick(

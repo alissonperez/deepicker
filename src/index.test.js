@@ -35,7 +35,7 @@ describe('#picker', () => {
 
 describe('#xpathPicker', () => {
   test('should use an xpath inc and exc string', () => {
-    const include = 'bar/foo(other,otherInt),foo', exclude = 'bar/foo/otherInt'
+    const include = 'bar/foo,foo', exclude = 'bar/foo/otherInt'
     const expected = {
       foo: 'bar',
       bar: {
