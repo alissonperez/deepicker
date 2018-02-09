@@ -769,6 +769,15 @@ describe('#pickStatic', () => {
 
     expect(picker({}, excTree).pickStatic(val)).toEqual(expected)
   })
+
+  test('should handle null and undefined', () => {
+    const tree = {
+      foo: {}
+    }
+
+    expect(picker(tree).pickStatic(null)).toBe(null)
+    expect(picker(tree).pickStatic(undefined)).toBe(undefined)
+  })
 })
 
 describe('#toContext', () => {

@@ -78,7 +78,7 @@ const picker = {
 
   _pickStatic: function (val, incTree, excTree) {
     // Leafs (if we reach there)
-    if (typeof val !== 'object') {
+    if (typeof val !== 'object' || val === null || val === undefined) {
       return val
     }
 
