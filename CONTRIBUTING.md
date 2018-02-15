@@ -24,7 +24,3 @@ own fork, and then submit a pull-request. All new code should have associated un
 Additionally, the code should follow any stylistic and architectural guidelines
 prescribed by the project. In the absence of such guidelines, mimic the styles
 and patterns in the existing code-base.
-
-## How to merge
-
-Please do a `Squash and merge` since we want only one commit for your updates into `master` branch.
