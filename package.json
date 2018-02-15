@@ -1,20 +1,38 @@
 {
   "name": "deepicker",
   "version": "0.3.6",
-  "description": "",
+  "description": "A small and smart library to filter JS objects 🔪",
   "main": "src/index.js",
+  "homepage": "https://alissonperez.github.io/deepicker/",
+  "keywords": [
+    "js",
+    "json",
+    "mask",
+    "node-js",
+    "node",
+    "picker-library",
+    "picker"
+  ],
   "config": {
-    "src_path": "src"
+    "path": {
+      "src": "src"
+    }
   },
+  "precommit": "precommit",
   "scripts": {
-    "test": "jest",
-    "lint": "eslint $npm_package_config_src_path"
+    "lint": "eslint $npm_package_config_path_src",
+    "precommit": "make prepare",
+    "test": "jest"
   },
-  "author": "",
-  "license": "MIT",
   "devDependencies": {
     "eslint": "^4.16.0",
-    "jest": "^22.1.4"
+    "jest": "^22.1.4",
+    "pre-commit": "^1.2.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alissonperez/deepicker"
+  },
+  "license": "MIT"
 }
