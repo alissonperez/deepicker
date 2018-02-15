@@ -10,7 +10,7 @@ help:
 lint: ## lints javascript lines
 	$(PKG) lint
 
-prepare: lint test ## checks if a commit can be created
+prepare: lint test
 
 test: ## runs unit tests
 	$(PKG) test
