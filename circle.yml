@@ -12,8 +12,11 @@ dependencies:
 
 test:
  override:
-   - make lint
-   - make test
+   - make check
+
+compile:
+  override:
+    - make browser
 
 deployment:
   npm:
