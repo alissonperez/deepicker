@@ -7,21 +7,22 @@ help:
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e "s/\\$$//" | sed -e "s/##//"
 	@echo
 
-# TODO: Makes a `postpublish` (like) for building a
-#       correct deepicker.js external plugin
-browser: ## builds what it needs to be built for the browser version
-	make build
+browser: build
 
 build: ## builds mainly browser js files
 	$(PKG) build
+
+clean:
+	rm -rf dist/
 
 check: lint test
 
 lint: ## lints javascript lines
 	$(PKG) lint
 
-serve: ## server our dist for demo file
-	cd dist && http-server -p 3000
+start: ## clear dist and install dependencies
+	make clean
+	$(PKG) --dev
 
 test: ## runs unit tests
 	$(PKG) test
