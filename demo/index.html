@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title> Deepicker demo example </title>
+
+  <link rel="stylesheet" href="./css/style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/deepicker@0.3.8/dist/deepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.1/ace.js"></script>
+  <script src="./js/interaction.js" async></script>
+</head>
+<body>
+  <h1 class="title"> Deepicker demo example </h1>
+
+  <section class="demo">
+    <form action="#" method="get">
+      <div class="field logger">
+        <label for="sample-object"> sampleObject </label>
+        <textarea class="content" id="sample-object"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="include"> include </label>
+        <input id="include" type="text" value="foo,bar"/>
+      </div>
+
+      <div class="field">
+        <label for="exclude"> exclude </label>
+        <input id="exclude" type="text" value="bar.foo.other,bar.baz"/>
+      </div>
+
+      <div class="field logger">
+        <label> test this thing </label>
+        <div class="content js-input" id="js-input" contenteditable autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></div>
+      </div>
+
+      <div class="field">
+        <button type="submit" id="js-run"> Run (cmd+enter) </button>
+      </div>
+    </form>
+
+    <aside class="logger">
+      <label>console output</label>
+      <div class="content js-output" id="js-output"></div>
+    </aside>
+  </div>
+  </section>
+</body>
+</html>

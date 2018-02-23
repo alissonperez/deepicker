@@ -1,6 +1,8 @@
 # This file is equal to .gitignore BUT without "dist" dir.
 # you can keep it igual to .gitignore except with "dist" dir.
 
+# Demo page
+demo/
 
 # Logs
 logs
