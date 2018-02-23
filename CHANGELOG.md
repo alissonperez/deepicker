@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Changelog.
+- Demo version of deepicker
 
 ## [v0.3.8] - 2017-02-19
 
