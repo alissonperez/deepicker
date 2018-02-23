@@ -1,0 +1,126 @@
+/* root variables */
+:root {
+  --bold: 700;
+
+  --spacing-xsmall: 4px;
+  --spacing-small: calc(var(--spacing-xsmall) * 2);
+  --spacing-base: 12px;
+  --spacing-large: calc(var(--spacing-base) + var(--spacing-base));
+
+  --font-size-small: var(--spacing-base);
+  --font-size-base: calc(var(--spacing-base) + var(--spacing-xsmall));
+
+  --black: #000;
+  --blue: #9565FF;
+  --gray: #CCC;
+  --gray-darker: #AAA;
+  --white: #FFF;
+
+  font-family: monospace;
+}
+
+/* screen */
+.title { text-transform: lowercase;}
+
+.demo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 780px;
+}
+
+/* form */
+.field:not(:first-child):not(:last-child) {
+  margin-top: var(--spacing-large);
+}
+.field:last-child { margin-top: var(--spacing-xsmall); }
+label {
+  font-size: var(--font-size-base);
+  font-weight: var(--bold);
+}
+input, textarea, #js-output {
+  border-radius: var(--spacing-xsmall);
+  border: 1px solid var(--gray);
+  box-shadow: var(--spacing-xsmall) var(--spacing-xsmall) var(--spacing-xsmall) var(--gray) inset;
+  display: block;
+  font-family: monospace;
+  font-size: var(--font-size-small);
+  outline: none;
+  padding: var(--spacing-base);
+  width: 350px;
+}
+input { font-weight: var(--bold); }
+textarea {
+  height: 150px;
+  resize: none;
+}
+input::selection, textarea::selection {
+  background: var(--black);
+  color: var(--white);
+  opacity: 1;
+}
+#js-run {
+  background: var(--black);
+  border-radius: var(--spacing-xsmall);
+  border: 1px solid var(--gray);
+  box-shadow: none;
+  color: var(--white);
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  font-weight: var(--bold);
+  height: var(--spacing-large);
+  text-transform: uppercase;
+  transition: all .2s ease-in-out;
+  width: 95%;
+}
+#js-run:hover {
+  background: var(--gray);
+  border: 1px solid var(--black);
+  color: var(--black);
+}
+
+/* console */
+.logger > .content {
+  background: var(--black);
+  box-shadow: var(--spacing-xsmall) var(--spacing-xsmall) var(--spacing-xsmall) var(--gray-darker) inset;
+  color: var(--white);
+  font-size: var(--font-size-small);
+  outline: none;
+  overflow-y: scroll;
+  padding: var(--spacing-base);
+  width: 90%;
+}
+.logger > .content p:first-child { margin: 0; }
+.logger > .content::selection {
+  background: var(--white);
+  color: var(--black);
+}
+#js-input { height: 180px; }
+#js-output::-webkit-scrollbar {
+	background-color: var(--gray);
+  width: var(--spacing-base);
+}
+#js-output::-webkit-scrollbar-thumb {
+	border-radius: var(--spacing-base);
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: var(--gray-darker);
+}
+#js-output {
+  cursor: default;
+  height: 600px;
+}
+#js-output pre {
+  display: inline-block;
+  font-size: var(--font-size-small);
+  margin: 0;
+  vertical-align: top;
+}
+#js-output small {
+  color: var(--blue);
+}
+#js-output hr {
+  border: 0;
+  border-top: 1px dashed #FFF;
+  margin: var(--spacing-small) 0;
+}
+#js-output hr:first-child { display: none; }
