@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Changelog.
 - Demo version of deepicker
 
+### Security
+- Updated package-lock removing `hoek` dependency vulnerability.
+
 ## [v0.3.8] - 2017-02-19
 
 ### Added
