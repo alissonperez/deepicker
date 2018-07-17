@@ -10,7 +10,7 @@ Features:
 - Simple implementation.
 - Increases performance processing only what client asks for.
 - Non-blocking processing, it handles promisses in parallel very well.
-- Simple usage by clients. Just receive an `include` and `exclude` querystring and send then to Deepicker.
+- Simple usage by clients. Just receive an `include` and `exclude` querystring and send them to Deepicker.
 
 ### Installation
 
@@ -98,7 +98,7 @@ const myObject = {
         }
 
         // Pay attention here, picker instance is with 'nextMovie' context,
-        // so, when we call "pick" method it knows exactally what needs to cut
+        // so, when we call "pick" method it knows exactly what needs to cut out
         // or not.
         return picker.pick(movie)
     },
@@ -152,7 +152,7 @@ nextMovie: function(picker) {
         description: 'The galaxy is in the midst of a civil war. Spies for the Rebel Alliance have stolen plans...',
         releaseYear: 1977,
 
-        // Using a function to computate otherInfo about Episode IV
+        // Using a function to compute otherInfo about Episode IV
         otherInfo: function(picker) {
             // Perform somethig here to get movie info and return then
 
