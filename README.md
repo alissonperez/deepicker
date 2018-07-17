@@ -8,8 +8,9 @@ A tiny library inspired in GraphQL but much **more simple without buracratic thi
 Features:
 
 - Simple implementation.
-- Non-blocking processing.
-- Simple usage by clients. Just receive an `include` and `exclude` querystring bypass it to library.
+- Increases performance processing only what client asks for.
+- Non-blocking processing, it handles promisses in parallel very well.
+- Simple usage by clients. Just receive an `include` and `exclude` querystring and send then to Deepicker.
 
 ### Installation
 
@@ -25,6 +26,8 @@ $ yarn add deepicker
 
 ### Usage
 
+#### Quickstart example
+
 Let's see a very simple example to warmup:
 
 ```javascript
@@ -34,7 +37,7 @@ const deepicker = require('deepicker')
 const myObject = {
     title: 'Star Wars: Episode V - The Empire Strikes Back',
     episodeNumber: '5',
-    releaseYear: 1983,
+    releaseYear: 1980,
     characters: [
         { name: 'Luke Skywalker', actor: 'Mark Hamill' },
         { name: 'Han Solo', actor: 'Harrison Ford' },
@@ -71,4 +74,98 @@ As a result:
 }
 ```
 
-Deepicker handle a lot of data types inside your objects, like functions, arrays, promises, etc..).
+
+#### Using nested functions
+
+But we know, unfortunatelly, real life "usually" is not so simple. Thinking about it, Deepicker is able to handle a lot of data types inside our objects, like arrays, promises, functions... etc. And with this last data type is where Deepicker really shines and show its power! =)
+
+Let's see a more complex example using functions:
+
+```javascript
+const deepicker = require('deepicker')
+
+const myObject = {
+    title: 'Star Wars: Episode V - The Empire Strikes Back',
+    description: 'Fleeing the evil Galactic Empire, the Rebels abandon...',
+    releaseYear: 1980,
+
+    // Here, using a function to computate our 'nextMovie' key content (pay attention to "picker" arg)
+    nextMovie: function(picker) {
+        const movie = {
+            title: 'Star Wars: Episode IV - A New Hope)',
+            description: 'The galaxy is in the midst of a civil war. Spies for the Rebel Alliance have stolen plans...',
+            releaseYear: 1977
+        }
+
+        // Pay attention here, picker instance is with 'nextMovie' context,
+        // so, when we call "pick" method it knows exactally what needs to cut
+        // or not.
+        return picker.pick(movie)
+    },
+
+    previousMovie: function(picker) {
+        const movie = {
+            title: 'Star Wars: Episode VI - Return of the Jedi',
+            description: 'The Galactic Empire, under the direction of the ruthless Emperor...',
+            releaseYear: 1983
+        }
+
+        return picker.pick(movie)
+    }
+}
+
+// Now, we add "nextMovie" in our include fields and exclude "releaseYear" from "nextMovie".
+const include = 'title,description,nextMovie'
+const exclude = 'nextMovie.releaseYear'
+
+// Create our picker object
+const picker = deepicker.simplePicker(include, exclude)
+
+// Let's pick!
+console.log(picker.pick(myObject))
+```
+
+And we have the following as result:
+
+```json
+{
+    "title":"Star Wars: Episode V - The Empire Strikes Back",
+    "description":"Fleeing the evil Galactic Empire, the Rebels abandon...",
+    "nextMovie":{
+        "title":"Star Wars: Episode IV - A New Hope)",
+        "description":"The galaxy is in the midst of a civil war. Spies for the Rebel Alliance have stolen plans..."
+    }
+}
+```
+
+Ok, what happend?!
+
+First of all, we didn't ask for "previousMovie", so deepicker don't evaluate this function. In this example this don't affect performance, but thinking about an operation like access to a database to get something or call some API this can increase performance significantly. The main gain here is **we process only what client asks for**.
+
+Other thing, pay attention to `picker` arg received in our functions. This picker instance is with correct context, in this example, with `releaseYear` in exclude option. This is very important to pick content inside these functions and, as you can imagine, we can the same `pick` operation nested:
+
+
+```javascript
+nextMovie: function(picker) {
+    const movie = {
+        title: 'Star Wars: Episode IV - A New Hope)',
+        description: 'The galaxy is in the midst of a civil war. Spies for the Rebel Alliance have stolen plans...',
+        releaseYear: 1977,
+
+        // Using a function to computate otherInfo about Episode IV
+        otherInfo: function(picker) {
+            // Perform somethig here to get movie info and return then
+
+            return picker.pick({
+                directedBy: "George Lucas",
+                producedBy: "Gary Kurtz",
+                writtenBy: "George Lucas"
+            })
+        }
+    }
+
+    return picker.pick(movie)
+},
+```
+
+In this example, we can use `nextMovie.otherInfo.directedBy` in our `include` option to get only "George Lucas" name and exclude the other info. Or, `otherInfo` function even is called with `include` only with `nextMovie.releaseYear`.
