@@ -22,11 +22,9 @@
       "src": "src"
     }
   },
-  "precommit": "precommit",
   "scripts": {
     "build": "webpack --progress --env.prod",
     "lint": "eslint $npm_package_config_path_src",
-    "precommit": "make check",
     "test": "jest",
     "watch": "webpack --watch --env.dev"
   },
