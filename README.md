@@ -11,6 +11,7 @@ Features:
 - Increases performance processing only what client asks for.
 - Non-blocking processing, it handles promisses in parallel very well.
 - Simple usage by clients. Just receive an `include` and `exclude` querystring and send them to Deepicker.
+- No worries about dependencies, Deepicker is pure JS implementation.
 
 ### Installation
 
@@ -138,7 +139,7 @@ And we have the following as result:
 }
 ```
 
-Ok, what happend?!
+Ok, what happened?!
 
 First of all, we didn't ask for "previousMovie", so deepicker don't evaluate this function. In this example this don't affect performance, but thinking about an operation like access to a database to get something or call some API this can increase performance significantly. The main gain here is **we process only what client asks for**.
 
@@ -169,3 +170,76 @@ nextMovie: function(picker) {
 ```
 
 In this example, we can use `nextMovie.otherInfo.directedBy` in our `include` option to get only "George Lucas" name and exclude the other info. Or, `otherInfo` function even is called with `include` only with `nextMovie.releaseYear`.
+
+#### Using promises
+
+All we know that using JS is use asyncronous code, a library in node with no support for that is useless. So, Deepicker has a very good support to use Promises, lets take a look in an example:
+
+```javascript
+const deepicker = require('deepicker')
+
+const myObject = {
+    // First, we can have promises direct associated with our keys
+    // Deepicker will "resolve" it for us
+    title: Promise.resolve('Star Wars: Episode V - The Empire Strikes Back'),
+
+    description: 'Fleeing the evil Galactic Empire, the Rebels abandon...',
+    releaseYear: 1980,
+
+    // Our function to calculate next movie
+    nextMovie: function(picker) {
+        // Let's think we need to get next movie from an API, so we'll need an asyncronous request
+        return new Promise((resolve, reject) => {
+            // ... calling some API here
+
+            const movie = {
+                title: 'Star Wars: Episode IV - A New Hope)',
+                description: 'The galaxy is in the midst of a civil war. Spies for the Rebel Alliance have stolen plans...',
+                releaseYear: 1977
+            }
+
+            resolve(picker.pick(movie))
+        })
+    },
+
+    // Our function to calculate previous movie
+    previousMovie: function(picker) {
+        // Let's think we need to get next movie from an API, so we'll need an asyncronous request
+        return new Promise((resolve, reject) => {
+            // ... calling some API here
+
+            const movie = {
+                title: 'Star Wars: Episode VI - Return of the Jedi',
+                description: 'The Galactic Empire, under the direction of the ruthless Emperor...',
+                releaseYear: 1983
+            }
+
+            resolve(picker.pick(movie))
+        })
+    }
+}
+
+// Our include / exclude as usually
+const include = 'title,description,nextMovie'
+const exclude = 'nextMovie.releaseYear'
+
+const picker = deepicker.simplePicker(include, exclude)
+
+// To handle with promises in our object, we need to use 'pickPromise' method
+picker.pickPromise(myObject).then(result => {
+    console.log(result)
+})
+```
+
+As result:
+
+```
+{
+    "title":"Star Wars: Episode V - The Empire Strikes Back",
+    "description":"Fleeing the evil Galactic Empire, the Rebels abandon...",
+    "nextMovie":{
+        "title":"Star Wars: Episode IV - A New Hope)",
+        "description":"The galaxy is in the midst of a civil war. Spies for the Rebel Alliance have stolen plans..."
+    }
+}
+```
