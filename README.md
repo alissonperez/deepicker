@@ -243,3 +243,35 @@ As result:
     }
 }
 ```
+
+### Reference
+
+#### Constructor
+
+Building our picker is the first step to use it. Each constructors available uses one kind of include and exclude string.
+
+##### deepicker.simplePicker([includeStr], [excludeStr])
+
+This option handles simple include and exclude string, e.g.:
+
+```javascript
+const include = 'title,description,nextMovie'
+const exclude = 'nextMovie.releaseYear'
+
+const picker = deepicker.simplePicker(include, exclude)
+```
+
+As you see, our `include` and `exclude` vars are simple strings with fields separated by `,` and using `.` to going into objects. Always consider root element to build this string.
+
+##### deepicker.xpathPicker([includeStr], [excludeStr])
+
+This option handle include and exclude string with a "xpath like" format, e.g.:
+
+```javascript
+const include = 'nextMovie/releaseYear,characters(name,actor)'
+const exclude = 'previousMovie/characters/name'
+
+const picker = deepicker.xpathPicker(include, exclude)
+```
+
+As you see, it uses `/` to going deep into fields object and `,` to separate options. The great advantage to use this way is to save "bytes" with complex objects. In our example, using `characters(name,actor)` we instruct picker to get `name` and `actor` fields inside `characters` key. In other example, we can do something like this: `nextMovie/characters/bornDate(month,year)` to get just `month` and `year` of `bornDate` object inside `characters` from `nextMovie`.
