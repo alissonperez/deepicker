@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 *Add here new changes respecting [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) instructions.*
 
+## [v0.4.1] - 2018-10-03
+
+### Changed
+- Improve README documentation.
+
 ## [v0.4.0] - 2018-07-12
 
 ### Added
