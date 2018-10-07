@@ -1,6 +1,6 @@
 {
   "name": "deepicker",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A small and smart library to filter JS objects 🔪",
   "main": "src/index.js",
   "homepage": "https://alissonperez.github.io/deepicker/",
