@@ -1,8 +1,10 @@
-name: Version tagged
+name: Publish
 on:
   push:
     tags:
       - v*.*.*
+    branches:
+      - master
 
 jobs:
   lint:
@@ -18,5 +20,6 @@ jobs:
       - name: Publish package
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run:
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
           npm publish
