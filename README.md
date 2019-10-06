@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/alissonperez/deepicker.svg?style=svg)](https://circleci.com/gh/alissonperez/deepicker)
+![](https://github.com/alissonperez/deepicker/Build/badge.svg) ![](https://github.com/alissonperez/deepicker/Version%20tagged/badge.svg)
 
 Deepicker
 =============
@@ -14,6 +14,8 @@ Features:
 - No worries about dependencies, Deepicker is pure JS implementation.
 
 ### Installation
+
+Node support: **8+**
 
 ```bash
 $ npm i --save deepicker
