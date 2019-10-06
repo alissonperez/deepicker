@@ -11,7 +11,7 @@ function performMerge (destination, source) {
 
     // Adding all * content already set in destination
     // At our source before adding it into destination
-    if (key_source !== '*' && destination.hasOwnProperty('*')) {
+    if (key_source !== '*' && Object.prototype.hasOwnProperty.call(destination, '*')) {
       performMerge(source[key_source], destination['*'])
     }
 

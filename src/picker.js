@@ -40,31 +40,31 @@ const picker = {
     excTree = excTree || {}
 
     // It is in include keys, must be included
-    if (incTree.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(incTree, key)) {
       return true
     }
 
     // Key isn't in include keys but its filled,
     // it can't be included
     if (Object.keys(incTree).length > 0
-        && !incTree.hasOwnProperty('*')) {
+        && !Object.prototype.hasOwnProperty.call(incTree, '*')) {
       return false
     }
 
     // It is explicity in exclude keys and exclude keys is empty (is a leaf),
     // must not be included
-    if (excTree.hasOwnProperty(key)
+    if (Object.prototype.hasOwnProperty.call(excTree, key)
         && Object.keys(excTree[key]).length === 0) {
       return false
     }
 
     // Handle "*" wildcard in include
-    if (incTree.hasOwnProperty('*')) {
+    if (Object.prototype.hasOwnProperty.call(incTree, '*')) {
       return true
     }
 
     // Handle "*" wildcard in exclude
-    if (excTree.hasOwnProperty('*')
+    if (Object.prototype.hasOwnProperty.call(excTree, '*')
         && Object.keys(excTree['*']).length === 0) {
       return false
     }
@@ -104,7 +104,7 @@ const picker = {
     const result = {}
 
     keys.forEach(key => {
-      if (!val.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(val, key)) {
         return
       }
 
@@ -175,7 +175,7 @@ const picker = {
     let key
     for (let i in keys) {
       key = keys[i]
-      if (!val.hasOwnProperty(key)) continue
+      if (!Object.prototype.hasOwnProperty.call(val, key)) continue
 
       if (!(this._include(key, incTree, excTree))) {
         continue

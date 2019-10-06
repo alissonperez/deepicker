@@ -21,7 +21,7 @@ function parseFields (fields) {
       return
     }
 
-    if (!object.hasOwnProperty(item)) {
+    if (!Object.prototype.hasOwnProperty.call(object, item)) {
       object[item] = {}
     }
 
