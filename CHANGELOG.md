@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 - Change to use Github actions.
+- Update dev dependencies (`eslint` and `jest`).
+
+### Removed
+- Browser support (webpack, babel, etc...).
 
 ## [v0.4.1] - 2018-10-03
 
