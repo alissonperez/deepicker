@@ -1,0 +1,22 @@
+name: Version tagged
+on:
+  push:
+    tags:
+      - v*.*.*
+
+jobs:
+  lint:
+    name: Publish
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Publish package
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run:
+          npm publish
