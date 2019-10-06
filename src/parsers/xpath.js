@@ -22,7 +22,7 @@ function tokenizer(text) {
     }
 
     // Main tokens
-    if (tokens.hasOwnProperty(v)) {
+    if (Object.prototype.hasOwnProperty.call(tokens, v)) {
       result.push({k: tokens[v], v: v, startIndex: i})
       i++
       continue
@@ -35,7 +35,7 @@ function tokenizer(text) {
       field += v
       // Move to next char
       v = text[++i]
-    } while (i < text.length && !tokens.hasOwnProperty(v))
+    } while (i < text.length && !Object.prototype.hasOwnProperty.call(tokens, v))
 
     result.push({k: 'FIELD', v:field, startIndex: startField})
   }
