@@ -133,6 +133,7 @@ const picker = {
   _pick: function (val, incTree, excTree, promise) {
     // Simple values
     if (typeof val === 'number' ||
+        typeof val === 'boolean' ||
         typeof val === 'string' ||
         val === null ||
         val === undefined) {
